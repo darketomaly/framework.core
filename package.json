@@ -1,6 +1,6 @@
 {
   "name": "com.erkmoz.framework.core",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "displayName": "Framework Core",
   "description": "Core containing extensions and code utility.",
   "unity": "2019.1",
@@ -14,7 +14,7 @@
     "keyword3"
   ],
   "author": {
-    "name": "Unity",
+    "name": "Darketomaly",
     "email": "unity@example.com",
     "url": "https://www.unity3d.com"
   }
