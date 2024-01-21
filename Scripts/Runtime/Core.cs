@@ -6,6 +6,8 @@ namespace Framework
     {
         #region Extensions
 
+        #region Logs
+
         #if UNITY_2022_3_OR_NEWER
         [HideInCallstack]
         #endif
@@ -37,6 +39,8 @@ namespace Framework
         {
             Debug.LogError($"<color=#d9766f>[{contextObject.GetType()}] </color>{message}");
         }
+        
+        #endregion
         
         #endregion
     }
