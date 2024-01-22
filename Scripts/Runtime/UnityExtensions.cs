@@ -24,6 +24,7 @@ namespace Framework
         private static void OnLoad()
         {
             Debug.Log("GetComponent Cache loaded");
+            FlushCache();
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
         
@@ -53,6 +54,15 @@ namespace Framework
                 
                     if (cachedObj.m_Object != null)
                     {
+                        #if UNITY_EDITOR
+
+                        if (Prefs.LogsEnabled(Prefs.Logging.UnityExtensions))
+                        {
+                            keyObject.Log("Used cached object.");
+                        }
+                        
+                        #endif
+                        
                         return cachedObj.m_Object as T;
                     }
                     else
@@ -68,6 +78,15 @@ namespace Framework
                         }
                     }
                 }
+                
+                #if UNITY_EDITOR
+                
+                if (Prefs.LogsEnabled(Prefs.Logging.UnityExtensions))
+                {
+                    keyObject.LogImportant("Used Unity's `GetComponent`.");
+                }
+                
+                #endif
             
                 var newObj = keyObject.GetComponent<T>();
                 GetComponentCache.Add(keyObject, new CachedObject(newObj, newObj != null));

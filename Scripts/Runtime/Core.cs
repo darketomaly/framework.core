@@ -1,4 +1,10 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace Framework
 {
@@ -13,7 +19,7 @@ namespace Framework
         #endif
         public static void Log<T>(this T contextObject, string message)
         {
-            Debug.Log($"<color=#627bc4>[{contextObject.GetType()}] </color>{message}");
+            Debug.Log($"<color=#{Prefs.GetColorString(Prefs.Key.LogColor)}>[{contextObject.GetType()}] </color>{message}");
         }
         
         #if UNITY_2022_3_OR_NEWER
@@ -21,7 +27,7 @@ namespace Framework
         #endif
         public static void LogWarning<T>(this T contextObject, string message)
         {
-            Debug.Log($"<color=#ab953c>[{contextObject.GetType()}] </color>{message}");
+            Debug.Log($"<color=#{Prefs.GetColorString(Prefs.Key.WarningLogColor)}>[{contextObject.GetType()}] </color>{message}");
         }
         
         #if UNITY_2022_3_OR_NEWER
@@ -29,7 +35,7 @@ namespace Framework
         #endif
         public static void LogImportant<T>(this T contextObject, string message)
         {
-            Debug.Log($"<color=#b988d1>[{contextObject.GetType()}] </color>{message}");
+            Debug.Log($"<color=#{Prefs.GetColorString(Prefs.Key.ImportantLogColor)}>[{contextObject.GetType()}] </color>{message}");
         }
         
         #if UNITY_2022_3_OR_NEWER
@@ -37,11 +43,86 @@ namespace Framework
         #endif
         public static void LogError<T>(this T contextObject, string message)
         {
-            Debug.LogError($"<color=#d9766f>[{contextObject.GetType()}] </color>{message}");
+            Debug.LogError($"<color=#{Prefs.GetColorString(Prefs.Key.ErrorLogColor)}>[{contextObject.GetType()}] </color>{message}");
         }
         
         #endregion
         
         #endregion
+
+        public static class Prefs
+        {
+            [Flags]
+            public enum Logging
+            {
+                None = 0,
+                Everything = ~0,
+                Utility = 1 << 1,
+                EditorUtility = 1 << 2,
+                UnityExtensions = 1 << 3,
+                Mathematics = 1 << 4
+            }
+            
+            private static readonly Dictionary<string, string> Keys = new Dictionary<string, string>()
+            {
+                {Key.LogColor, "627bc4"},
+                {Key.ImportantLogColor, "ab953c"},
+                {Key.WarningLogColor, "b988d1"},
+                {Key.ErrorLogColor, "d9766f"}
+            };
+            
+            public class Key
+            {
+                public const string LogColor = "LogColor";
+                public const string ImportantLogColor = "ImportantLogColor";
+                public const string WarningLogColor = "WarningLogColor";
+                public const string ErrorLogColor = "ErrorLogColor";
+                
+                public const string Logs = "Logs";
+            }
+
+            [MenuItem("Tools/Framework/Clear Preferences")]
+            public static void Clear()
+            {
+                EditorPrefs.DeleteKey(Key.LogColor);
+                EditorPrefs.DeleteKey(Key.ImportantLogColor);
+                EditorPrefs.DeleteKey(Key.WarningLogColor);
+                EditorPrefs.DeleteKey(Key.ErrorLogColor);
+                EditorPrefs.DeleteKey(Key.Logs);
+            }
+
+            public static bool LogsEnabled(Logging logType)
+            {
+                var flags = EditorPrefs.GetInt(Prefs.Key.Logs, 0);
+                var logging = (Logging)flags;
+                return logging.HasFlag(logType);
+            }
+            
+            public static string GetColorString(string key)
+            {
+                #if !UNITY_EDITOR
+
+                return Keys[key];
+                
+                #endif
+                
+                return EditorPrefs.GetString(key, Keys[key]);
+            }
+
+            public static Color GetColor(string key)
+            {
+                var colorString = Keys[key];
+                
+                #if UNITY_EDITOR
+
+                colorString = EditorPrefs.GetString(key, Keys[key]);
+                
+                #endif
+                
+                ColorUtility.TryParseHtmlString($"#{colorString}", out Color parsedColor);
+                
+                return parsedColor;
+            }
+        }
     }
 }

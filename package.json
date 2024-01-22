@@ -1,6 +1,6 @@
 {
   "name": "com.erkmoz.framework.core",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "displayName": "Framework Core",
   "description": "Core containing extensions and code utility.",
   "unity": "2019.1",

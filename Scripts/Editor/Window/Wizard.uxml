@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/com.erkmoz.framework.core/Scripts/Editor/Window/Wizard.uss?fileID=7433441132597879392&amp;guid=c6391aac1d41a1e4da5e4970a82e047d&amp;type=3#Wizard" />
+    <ui:ScrollView style="-unity-font-definition: initial; -unity-font: url(&apos;project://database/Assets/com.erkmoz.framework.core/Scripts/Editor/Window/Jonathan%20Ball%20-%20Acre-Medium.otf?fileID=12800000&amp;guid=2a190a3d327501e4885575aab959e72c&amp;type=3#Jonathan Ball - Acre-Medium&apos;); margin-top: 10px; margin-left: 10px;">
+        <ui:Label tabindex="-1" text="Preferences" parse-escape-sequences="true" display-tooltip-when-elided="true" style="-unity-font-style: bold; font-size: 16px; margin-bottom: 4px;" />
+        <uie:ColorField label="Log Color" value="#627BC4FF" name="LogColor" />
+        <uie:ColorField label="Important color" value="#B988D1FF" name="ImportantLogColor" />
+        <uie:ColorField label="Warning Color" value="#AB953CFF" name="WarningLogColor" />
+        <uie:ColorField label="Error Color" value="#D9766FFF" name="ErrorLogColor" />
+        <ui:Label tabindex="-1" text="Debugging" parse-escape-sequences="true" display-tooltip-when-elided="true" style="-unity-font-style: bold; font-size: 16px; margin-top: 8px; margin-bottom: 4px;" />
+        <uie:EnumFlagsField label="Logs" type="Framework.Core+Prefs+Logging, erkmoz.frameworkcore.runtime" name="LogFlags" />
+    </ui:ScrollView>
+</ui:UXML>
