@@ -14,12 +14,26 @@ namespace Framework
 
         #region Logs
 
+        private static string GetNameOrFullName(this System.Type type)
+        {
+            #if UNITY_EDITOR
+
+            if (EditorPrefs.GetBool(Prefs.Key.FullTypePath))
+            {
+                return type.ToString();
+            }
+            
+            #endif
+
+            return type.Name;
+        }
+
         #if UNITY_2022_3_OR_NEWER
         [HideInCallstack]
         #endif
         public static void Log<T>(this T contextObject, string message)
         {
-            Debug.Log($"<color=#{Prefs.GetColorString(Prefs.Key.LogColor)}>[{contextObject.GetType()}] </color>{message}");
+            Debug.Log($"<color=#{Prefs.GetColorString(Prefs.Key.LogColor)}>[{contextObject.GetType().GetNameOrFullName()}] </color>{message}");
         }
         
         #if UNITY_2022_3_OR_NEWER
@@ -27,7 +41,7 @@ namespace Framework
         #endif
         public static void LogWarning<T>(this T contextObject, string message)
         {
-            Debug.Log($"<color=#{Prefs.GetColorString(Prefs.Key.WarningLogColor)}>[{contextObject.GetType()}] </color>{message}");
+            Debug.Log($"<color=#{Prefs.GetColorString(Prefs.Key.WarningLogColor)}>[{contextObject.GetType().GetNameOrFullName()}] </color>{message}");
         }
         
         #if UNITY_2022_3_OR_NEWER
@@ -35,7 +49,7 @@ namespace Framework
         #endif
         public static void LogImportant<T>(this T contextObject, string message)
         {
-            Debug.Log($"<color=#{Prefs.GetColorString(Prefs.Key.ImportantLogColor)}>[{contextObject.GetType()}] </color>{message}");
+            Debug.Log($"<color=#{Prefs.GetColorString(Prefs.Key.ImportantLogColor)}>[{contextObject.GetType().GetNameOrFullName()}] </color>{message}");
         }
         
         #if UNITY_2022_3_OR_NEWER
@@ -43,7 +57,7 @@ namespace Framework
         #endif
         public static void LogError<T>(this T contextObject, string message)
         {
-            Debug.LogError($"<color=#{Prefs.GetColorString(Prefs.Key.ErrorLogColor)}>[{contextObject.GetType()}] </color>{message}");
+            Debug.LogError($"<color=#{Prefs.GetColorString(Prefs.Key.ErrorLogColor)}>[{contextObject.GetType().GetNameOrFullName()}] </color>{message}");
         }
         
         #endregion
@@ -66,8 +80,8 @@ namespace Framework
             private static readonly Dictionary<string, string> Keys = new Dictionary<string, string>()
             {
                 {Key.LogColor, "627bc4"},
-                {Key.ImportantLogColor, "ab953c"},
-                {Key.WarningLogColor, "b988d1"},
+                {Key.ImportantLogColor, "b988d1"},
+                {Key.WarningLogColor, "ab953c"},
                 {Key.ErrorLogColor, "d9766f"}
             };
             
@@ -77,6 +91,8 @@ namespace Framework
                 public const string ImportantLogColor = "ImportantLogColor";
                 public const string WarningLogColor = "WarningLogColor";
                 public const string ErrorLogColor = "ErrorLogColor";
+                
+                public const string FullTypePath = "FullTypeName";
                 
                 public const string Logs = "Logs";
             }

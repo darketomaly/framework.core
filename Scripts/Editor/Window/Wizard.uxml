@@ -6,6 +6,7 @@
         <uie:ColorField label="Important color" value="#B988D1FF" name="ImportantLogColor" />
         <uie:ColorField label="Warning Color" value="#AB953CFF" name="WarningLogColor" />
         <uie:ColorField label="Error Color" value="#D9766FFF" name="ErrorLogColor" />
+        <ui:Toggle label="Full Type Path" name="FullTypePath" />
         <ui:Label tabindex="-1" text="Debugging" parse-escape-sequences="true" display-tooltip-when-elided="true" style="-unity-font-style: bold; font-size: 16px; margin-top: 8px; margin-bottom: 4px;" />
         <uie:EnumFlagsField label="Logs" type="Framework.Core+Prefs+Logging, erkmoz.frameworkcore.runtime" name="LogFlags" />
     </ui:ScrollView>

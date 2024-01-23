@@ -50,7 +50,14 @@ public class Wizard : EditorWindow
         root.Q<ColorField>("WarningLogColor").RegisterValueChangedCallback(changeEvent => { OnColorValueChanged(changeEvent, Core.Prefs.Key.WarningLogColor); });
         root.Q<ColorField>("ErrorLogColor").RegisterValueChangedCallback(changeEvent => { OnColorValueChanged(changeEvent, Core.Prefs.Key.ErrorLogColor); });
 
+        root.Q<Toggle>("FullTypePath").RegisterValueChangedCallback(changeEvent => { OnToggleValueChanged(changeEvent, Core.Prefs.Key.FullTypePath); });
+
         root.Q<EnumFlagsField>("LogFlags").RegisterValueChangedCallback(changeEvent => { OnEnumFlagsValueChanged(changeEvent, Core.Prefs.Key.Logs); });
+    }
+
+    private void OnToggleValueChanged(ChangeEvent<bool> evt, string key)
+    {
+        EditorPrefs.SetBool(key, evt.newValue);
     }
     
     private void OnEnumFlagsValueChanged(ChangeEvent<Enum> evt, string key)

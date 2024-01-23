@@ -26,7 +26,7 @@ namespace Framework
                     Abstract
                 }
 
-                [MenuItem("Tools/Test Script Generation")]
+                //[MenuItem("Tools/Test Script Generation")]
                 public static void Test()
                 {
                     string content = string.Empty;

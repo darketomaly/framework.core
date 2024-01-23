@@ -1,5 +1,5 @@
 {
-    "name": "Editor",
+    "name": "erkmoz.frameworkcore.editor",
     "rootNamespace": "",
     "references": [
         "GUID:1827483a8a6786940b4ad040be88f273"

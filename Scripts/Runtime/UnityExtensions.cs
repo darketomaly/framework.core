@@ -6,7 +6,7 @@ namespace Framework
 {
     public static partial class Core
     {
-        private static readonly Dictionary<Component, CachedObject> GetComponentCache = new();
+        private static readonly Dictionary<(Component, object), CachedObject> GetComponentCache = new();
         
         struct CachedObject
         {
@@ -31,6 +31,7 @@ namespace Framework
         private static void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
         {
             Debug.Log("Scene Loaded, flushing cache.");
+            FlushCache();
         }
 
         public static void FlushCache()
@@ -48,9 +49,9 @@ namespace Framework
         {
             if (Application.isPlaying)
             {
-                if (GetComponentCache.ContainsKey(keyObject))
+                if (GetComponentCache.ContainsKey((keyObject, typeof(T))))
                 {
-                    var cachedObj = GetComponentCache[keyObject];
+                    var cachedObj = GetComponentCache[(keyObject, typeof(T))];
                 
                     if (cachedObj.m_Object != null)
                     {
@@ -70,7 +71,7 @@ namespace Framework
                         //If it had something, the object got destroyed, re-cache it
                         if (cachedObj.m_HadSomethingAtSomePoint)
                         {
-                            GetComponentCache.Remove(keyObject);
+                            GetComponentCache.Remove((keyObject, typeof(T)));
                         }
                         else
                         {
@@ -89,7 +90,7 @@ namespace Framework
                 #endif
             
                 var newObj = keyObject.GetComponent<T>();
-                GetComponentCache.Add(keyObject, new CachedObject(newObj, newObj != null));
+                GetComponentCache.Add((keyObject, typeof(T)), new CachedObject(newObj, newObj != null));
                     
                 return newObj;
             }
