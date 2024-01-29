@@ -18,7 +18,7 @@ namespace Framework
         {
             #if UNITY_EDITOR
 
-            if (EditorPrefs.GetBool(Prefs.Key.FullTypePath))
+            if (EditorPrefs.GetBool(Prefs.Key.FullTypePath, false))
             {
                 return type.ToString();
             }
@@ -97,6 +97,8 @@ namespace Framework
                 public const string Logs = "Logs";
             }
 
+            #if UNITY_EDITOR
+            
             [MenuItem("Tools/Framework/Clear Preferences")]
             public static void Clear()
             {
@@ -106,6 +108,8 @@ namespace Framework
                 EditorPrefs.DeleteKey(Key.ErrorLogColor);
                 EditorPrefs.DeleteKey(Key.Logs);
             }
+            
+            #endif
 
             public static bool LogsEnabled(Logging logType)
             {
