@@ -109,14 +109,14 @@ namespace Framework
                 EditorPrefs.DeleteKey(Key.Logs);
             }
             
-            #endif
-
             public static bool LogsEnabled(Logging logType)
             {
                 var flags = EditorPrefs.GetInt(Prefs.Key.Logs, 0);
                 var logging = (Logging)flags;
                 return logging.HasFlag(logType);
             }
+            
+            #endif
             
             public static string GetColorString(string key)
             {
