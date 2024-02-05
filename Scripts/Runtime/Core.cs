@@ -62,6 +62,25 @@ namespace Framework
         
         #endregion
         
+        /// <returns>
+        /// Returns a default (which can be null for reference types, or the default for value types)
+        /// if the object could not be casted or the index is out of bounds.
+        /// </returns>
+        public static T SafeGetAt<T>(this object[] objs, int index)
+        {
+            if (objs != null && objs.Length > index && index >= 0)
+            {
+                object obj = objs[index];
+                
+                if(obj is T obj1)
+                {
+                    return obj1;
+                }
+            }
+            
+            return default;
+        }
+        
         #endregion
 
         public static class Prefs
